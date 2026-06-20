@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kasir Angkringan K-Lounge</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* Desain Khusus Tambahan untuk Tombol Navigasi Kategori */
+        .navigation-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            min-height: 40px;
+        }
+        .btn-kembali {
+            background: #64748b;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            display: none; /* Muncul hanya saat di dalam menu */
+        }
+        .btn-kembali:hover { background: #475569; }
+        .current-title { font-size: 18px; font-weight: bold; color: #1e293b; }
+        
+        /* Desain kartu khusus saat berstatus kotak Kategori Utama */
+        .category-card {
+            background: linear-gradient(135deg, #0ea5e9, #0284c7) !important;
+            color: white !important;
+            padding: 30px 20px !important;
+            font-size: 18px !important;
+            font-weight: bold;
+            border: none !important;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-radius: 16px !important;
+        }
+        .category-card:hover {
+            transform: translateY(-4px) !important;
+            box-shadow: 0 12px 20px -5px rgba(2, 132, 199, 0.4) !important;
+        }
+        .category-icon { font-size: 32px; }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Bagian Kiri: Area Menu & Kategori -->
+        <div class="menu-section">
+            <div class="header">
+                <h1>✨ Angkringan K-Lounge ✨</h1>
+                <p>Sajian Nikmat, Suasana Hangat</p>
+            </div>
+            <div class="input-kasir">
+                <label for="nama-kasir">Kasir yang Bertugas:</label>
+                <input type="text" id="nama-kasir" value="Deden" placeholder="Masukkan nama...">
+            </div>
+
+            <!-- Navigasi Pintar Atas -->
+            <div class="navigation-area">
+                <button class="btn-kembali" id="btn-back" onclick="kembaliKeKategori()">⬅️ Kembali</button>
+                <span class="current-title" id="view-title">📁 Pilih Kategori Utama</span>
+            </div>
+
+            <!-- Kontainer Utama: Bisa berisi daftar kategori atau daftar menu makanan -->
+            <div class="menu-grid" id="menu-container">
+                <!-- Diisi otomatis via JavaScript -->
+            </div>
+        </div>
+
+        <!-- Bagian Kanan: Keranjang Pesanan -->
+        <div class="cart-section">
+            <h2>🛒 Keranjang Pesanan</h2>
+            <div class="cart-items" id="cart-container">
+                <p class="empty-cart">Keranjang masih kosong.</p>
+            </div>
+            <div class="cart-summary">
+                <div class="summary-line"><span>Total Kotor:</span><span id="total-kotor">Rp0</span></div>
+                <div class="summary-line"><span>Total Potongan:</span><span id="total-diskon" class="text-green">Rp0</span></div>
+                <div class="summary-line total-netto"><span>TOTAL NETTO:</span><span id="total-netto">Rp0</span></div>
+            </div>
+            <button class="btn-checkout" onclick="prosesCheckout()">🧾 Cetak Nota & Bayar (QRIS)</button>
+        </div>
+    </div>
+
+    <!-- Pop-Up Modal Nota & QRIS -->
+    <div class="modal" id="nota-modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="tutupModal()">&times;</span>
+            <div class="nota-print" id="nota-print-area">
+                <div class="nota-header">
+                    <h3>ANGKRINGAN K-LOUNGE</h3>
+                    <p>Sajian Nikmat, Suasana Hangat</p>
+                    <p>----------------------------------------</p>
+                </div>
+                <div class="nota-meta">
+                    <p>No. Nota : <span id="nota-id"></span></p>
+                    <p>Kasir    : <span id="nota-kasir"></span></p>
+                    <p>Tanggal  : <span id="nota-tanggal"></span></p>
+                    <p>Bayar    : <strong>QRIS ALL PAYMENT (LUNAS)</strong></p>
+                    <p>----------------------------------------</p>
+                </div>
+                <div class="nota-items" id="nota-items-container">
+                    <!-- Item belanjaan -->
+                </div>
+                <div class="nota-summary">
+                    <p>----------------------------------------</p>
+                    <div class="nota-line"><span>Total Kotor:</span><span id="nota-total-kotor"></span></div>
+                    <div class="nota-line"><span>Total Potongan:</span><span id="nota-total-diskon"></span></div>
+                    <div class="nota-line font-bold"><span>TOTAL NETTO:</span><span id="nota-total-netto"></span></div>
+                    <p>----------------------------------------</p>
+                </div>
+                <div class="nota-qris-area">
+                    <p class="font-bold">[ QRIS MERCHANT ]</p>
+                    <p>NMID: ID1025385894163</p>
+                    <img src="qris_asli.jpeg" alt="QRIS Angkringan K-Lounge" class="qris-img-display">
+                    <p class="nota-footer">~ Terima Kasih & Lunas ~</p>
+                </div>
+            </div>
+            <button class="btn-print" onclick="window.print()">🖨️ Cetak Struk ke Printer</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
